@@ -1,9 +1,12 @@
 <template>
   <section class="todoapp">
+
     <header class="header">
       <h1>todos</h1>
-      <input class="new-todo" placeholder="What needs to be done?" autofocus>
+      <input class="new-todo" placeholder="What needs to be done?" autofocus v-model="tmp" @keydown.enter="toFill">
     </header>
+
+
     <!-- This section should be hidden by default and shown when there are todos -->
     <section class="main">
       <input id="toggle-all" class="toggle-all" type="checkbox">
@@ -20,15 +23,17 @@
           <input class="edit" value="Create a TodoMVC template">
         </li>
         <li>
-            <div class="view">
-              <input class="toggle" type="checkbox">
-              <label>Buy a unicorn</label>
-              <button class="destroy"></button>
-            </div>
-            <input class="edit" value="Rule the web">
+          <div class="view">
+            <input class="toggle" type="checkbox">
+            <label>Buy a unicorn</label>
+            <button class="destroy"></button>
+          </div>
+          <input class="edit" value="Rule the web">
         </li>
       </ul>
     </section>
+
+
     <!-- This footer should be hidden by default and shown when there are todos -->
     <footer class="footer">
       <!-- This should be `0 items left` by default -->
@@ -55,6 +60,24 @@
 
 
 export default {
+  data() {
+    return {
+      tmp: " ",
+      todos: [
+        { name: "Faire une Todo", state: false},
+        { name: "Reussir l'exercice", state: false},
+      ],
+
+    }
+  },
+  // computed: {
+
+  // },
+  methods: {
+    toFill() {
+      console.log(this.tmp);
+    },
+  }
 
 }
 </script>
