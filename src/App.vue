@@ -14,18 +14,18 @@
       <ul class="todo-list">
         <!-- These are here just to show the structure of the list items -->
         <!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
-        <li class="completed">
+        <!-- <li class="completed">
           <div class="view">
             <input class="toggle" type="checkbox" checked>
-            <label>Taste JavaScript</label>
+            <label>{{ tmp }}</label>
             <button class="destroy"></button>
           </div>
           <input class="edit" value="Create a TodoMVC template">
-        </li>
-        <li>
+        </li> -->
+        <li v-for="(todo, index) of todos" :key="index">
           <div class="view">
             <input class="toggle" type="checkbox">
-            <label>Buy a unicorn</label>
+            <label>{{ todo.name }}</label>
             <button class="destroy"></button>
           </div>
           <input class="edit" value="Rule the web">
@@ -35,9 +35,9 @@
 
 
     <!-- This footer should be hidden by default and shown when there are todos -->
-    <footer class="footer">
+    <footer class="footer" v-if="todos.length > 0">
       <!-- This should be `0 items left` by default -->
-      <span class="todo-count"><strong>0</strong> item left</span>
+      <span class="todo-count"><strong>{{ todos.length }}</strong> item left</span>
       <!-- Remove this if you don't implement routing -->
       <ul class="filters">
         <li>
@@ -51,7 +51,7 @@
         </li>
       </ul>
       <!-- Hidden if no completed items are left ↓ -->
-      <button class="clear-completed">Clear completed</button>
+      <button class="clear-completed" @click="todos.length = 0">Clear completed</button>
     </footer>
   </section>
 </template>
@@ -64,8 +64,8 @@ export default {
     return {
       tmp: " ",
       todos: [
-        { name: "Faire une Todo", state: false},
-        { name: "Reussir l'exercice", state: false},
+        // { name: "Faire une Todo", state: false},
+        // { name: "Reussir l'exercice", state: false},
       ],
 
     }
@@ -76,6 +76,8 @@ export default {
   methods: {
     toFill() {
       console.log(this.tmp);
+      console.log(this.todos)
+      this.todos.push({ name: this.tmp, state: true});
     },
   }
 
@@ -128,7 +130,7 @@ body {
     margin: 130px 0 40px 0;
     position: relative;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2),
-                0 25px 50px 0 rgba(0, 0, 0, 0.1);
+    0 25px 50px 0 rgba(0, 0, 0, 0.1);
 }
 
 .todoapp input::-webkit-input-placeholder {
