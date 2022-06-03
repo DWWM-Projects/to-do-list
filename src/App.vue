@@ -14,19 +14,19 @@
       <ul class="todo-list">
         <!-- These are here just to show the structure of the list items -->
         <!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
-        <!-- <li class="completed">
+        <!-- <li class="active">
           <div class="view">
             <input class="toggle" type="checkbox" checked>
-            <label>{{ tmp }}</label>
+            <label>Test</label>
             <button class="destroy"></button>
           </div>
           <input class="edit" value="Create a TodoMVC template">
         </li> -->
-        <li v-for="(todo, index) of todos" :key="index">
+        <li v-for="(todo, index) of todos" :key="index" :class="{ completed: todo.state == true }">
           <div class="view">
-            <input class="toggle" type="checkbox">
-            <label>{{ todo.name }}</label>
-            <button class="destroy"></button>
+            <input class="toggle" type="checkbox" v-model="todo.state">
+            <label :class="{finished: todo.state == true}">{{ todo.name }}</label>
+            <button class="destroy" @click="this.todos.splice(index, 1)"></button>
           </div>
           <input class="edit" value="Rule the web">
         </li>
@@ -75,9 +75,11 @@ export default {
   // },
   methods: {
     toFill() {
-      console.log(this.tmp);
-      console.log(this.todos)
-      this.todos.push({ name: this.tmp, state: true});
+        console.log(this.tmp);
+        console.log(this.todos)
+        this.todos.push({ name: this.tmp, state: false, toEdit: false});
+        this.tmp = "";
+
     },
   }
 
@@ -90,6 +92,11 @@ html,
 body {
     margin: 0;
     padding: 0;
+}
+
+.finished {
+    text-decoration: line-through;
+    color: #d3d3d3 !important;
 }
 
 button {
