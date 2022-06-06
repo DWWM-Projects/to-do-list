@@ -22,9 +22,9 @@
           </div>
           <input class="edit" value="Create a TodoMVC template">
         </li> -->
-        <li v-for="(todo, index) of todos" :key="index" :class="{ completed: todo.state == true }">
+        <li v-show="filter == 'all' || (todo.state == true && filter == 'completed') ||  (todo.state == false && filter == 'active')" v-for="(todo, index) of todos" :key="index" :class="{ completed: todo.state == true }">
           <div class="view">
-            <input class="toggle" type="checkbox" v-model="todo.state">
+            <input class="toggle" type="checkbox" v-model="todo.state" :checked="todo.state">
             <label :class="{finished: todo.state == true}">{{ todo.name }}</label>
             <button class="destroy" @click="this.todos.splice(index, 1)"></button>
           </div>
@@ -41,13 +41,13 @@
       <!-- Remove this if you don't implement routing -->
       <ul class="filters">
         <li>
-          <a class="selected" href="#/">All</a>
+          <a class="selected" href="#/" @click="filter = 'all'">All</a>
         </li>
         <li>
-          <a href="#/active">Active</a>
+          <a href="#/active" @click="filter = 'active'">Active</a>
         </li>
         <li>
-          <a href="#/completed">Completed</a>
+          <a href="#/completed" @click="filter = 'completed'">Completed</a>
         </li>
       </ul>
       <!-- Hidden if no completed items are left ↓ -->
@@ -63,9 +63,9 @@ export default {
   data() {
     return {
       tmp: " ",
+      filter: "all",
       todos: [
-        // { name: "Faire une Todo", state: false},
-        // { name: "Reussir l'exercice", state: false},
+          
       ],
 
     }
@@ -79,7 +79,7 @@ export default {
         console.log(this.todos)
         this.todos.push({ name: this.tmp, state: false, toEdit: false});
         this.tmp = "";
-
+        console.log(this.filter);
     },
   }
 
